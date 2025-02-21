@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import BlogPost from "@/components/BlogPost";
+import BlogPost from "@/components/blog/BlogPost";
 
 const mockPost = {
   id: "1",

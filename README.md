@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Blog with Real-Time Comments
 
-## Getting Started
+This project is a blog built with **Next.js 14** that includes a real-time commenting system. It uses **React Server Components**, **Zustand** for client-side state management, and **WebSocket** for real-time comment synchronization.
 
-First, run the development server:
+## Key Features
+
+- **Server-Side Rendering (SSR)**: Blog pages and comments are rendered on the server for better performance and SEO.
+- **Real-Time Comments**: Users can add comments and see them update in real time.
+- **State Management**: Zustand is used to manage comment state on the client side.
+- **Modular Design**: Components are organized by responsibility and follow best development practices.
+- **Testing**: Includes unit, integration, and end-to-end (E2E) tests to ensure code quality.
+
+
+## Project Setup
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm (v9 or higher)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/crislo11/nextjs-blog.git
+   cd nextjs-blog
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env.local` file in the root directory and add the following environment variables:
+
+   ```bash
+   NEXT_PUBLIC_API_URL=https://jsonplaceholder.typicode.com
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the blog.
+
+### Running Tests
+
+To run tests, use the following command:
+
+```bash
+npm test
+```
+
+### End-to-End (E2E) Tests
+
+Start the application in development mode:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run cypress:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npx cypress open
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The E2E tests use [Cypress](https://www.cypress.io/) to interact with the application and verify its behavior.
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
