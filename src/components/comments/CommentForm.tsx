@@ -32,7 +32,7 @@ export default function CommentForm({ postId }: { postId: string }) {
     };
 
     const response = await fetch(
-      "https://jsonplaceholder.typicode.com/comments",
+      `${process.env.NEXT_PUBLIC_API_URL}/comments`,
       {
         method: "POST",
         headers: {
