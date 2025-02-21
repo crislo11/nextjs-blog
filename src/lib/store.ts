@@ -1,17 +1,15 @@
-import create from "zustand";
-import { fetchBlogPosts, Post } from "./api";
+import { create } from "zustand";
+import { Comment } from "./api";
 
 interface BlogState {
-  posts: Post[];
-  fetchPosts: () => Promise<void>;
+  comments: Comment[];
+  addComment: (comment: Comment) => void;
 }
 
 const useBlogStore = create<BlogState>((set) => ({
-  posts: [],
-  fetchPosts: async () => {
-    const posts = await fetchBlogPosts();
-    set({ posts });
-  },
+  comments: [],
+  addComment: (comment) =>
+    set((state) => ({ comments: [...state.comments, comment] })),
 }));
 
 export default useBlogStore;

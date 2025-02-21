@@ -12,8 +12,16 @@ export interface Post {
   };
 }
 
+export interface Comment {
+  id: number;
+  postId: string;
+  name: string;
+  email: string;
+  body: string;
+}
+
 // JSONPlaceholder endpoint
-const JSON_PLACEHOLDER_URL = "https://jsonplaceholder.typicode.com/posts";
+const JSON_PLACEHOLDER_URL = "https://jsonplaceholder.typicode.com";
 
 // Mock author data (since JSONPlaceholder doesn't provide author information)
 const MOCK_AUTHOR = {
@@ -23,7 +31,7 @@ const MOCK_AUTHOR = {
 
 export async function fetchBlogPosts(): Promise<Post[]> {
   try {
-    const response = await fetch(JSON_PLACEHOLDER_URL);
+    const response = await fetch(`${JSON_PLACEHOLDER_URL}/posts`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch blog posts");
@@ -53,7 +61,7 @@ export async function fetchBlogPostBySlug(slug: string): Promise<Post | null> {
   try {
     const postId = slug.split("-")[1];
 
-    const response = await fetch(`${JSON_PLACEHOLDER_URL}/${postId}`);
+    const response = await fetch(`${JSON_PLACEHOLDER_URL}/posts/${postId}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch blog post");
@@ -73,6 +81,24 @@ export async function fetchBlogPostBySlug(slug: string): Promise<Post | null> {
     };
   } catch (error) {
     console.error("Error fetching blog post:", error);
+    throw error;
+  }
+}
+
+export async function fetchComments(postId: string): Promise<Comment[]> {
+  try {
+    const response = await fetch(
+      `${JSON_PLACEHOLDER_URL}/comments?postId=${postId}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch comments");
+    }
+
+    const comments: Comment[] = await response.json();
+    return comments;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
     throw error;
   }
 }
