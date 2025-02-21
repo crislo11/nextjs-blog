@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Comments from "@/components/Comments";
+import Comments from "@/components/comments/Comments";
 
 const mockComments = [
   {

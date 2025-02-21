@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import BlogList from "@/components/BlogList";
-import BlogPost from "@/components/BlogPost";
+import BlogList from "@/components/blog/BlogList";
+import BlogPost from "@/components/blog/BlogPost";
 
 const mockPost = {
   id: "1",

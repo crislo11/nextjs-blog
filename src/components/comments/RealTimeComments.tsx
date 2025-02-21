@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import useBlogStore from "@/lib/store";
-import Comments from "@/components/Comments";
-import CommentForm from "@/components/CommentForm";
+import Comments from "@/components/comments/Comments";
+import CommentForm from "@/components/comments/CommentForm";
 
 interface Comment {
   id: number;

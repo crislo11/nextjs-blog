@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import RealTimeComments from "@/components/RealTimeComments";
+import RealTimeComments from "@/components/comments/RealTimeComments";
 
 const mockComments = [
   {

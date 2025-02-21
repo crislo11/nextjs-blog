@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import BlogList from "@/components/BlogList";
+import BlogList from "@/components/blog/BlogList";
 
 const mockPost = {
   id: "1",
@@ -18,7 +18,9 @@ describe("BlogList Component", () => {
 
   it("renders the post excerpt", () => {
     render(<BlogList post={mockPost} />);
-    expect(screen.getByText("This is a test post excerpt.")).toBeInTheDocument();
+    expect(
+      screen.getByText("This is a test post excerpt.")
+    ).toBeInTheDocument();
   });
 
   it("renders the post date", () => {

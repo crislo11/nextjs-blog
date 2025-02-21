@@ -1,7 +1,7 @@
 import { fetchBlogPostBySlug, fetchComments } from "@/lib/api";
 import Layout from "@/app/layout";
-import BlogPost from "@/components/BlogPost";
-import RealTimeComments from "@/components/RealTimeComments";
+import BlogPost from "@/components/blog/BlogPost";
+import RealTimeComments from "@/components/comments/RealTimeComments";
 
 export default async function BlogPostPage({
   params,
