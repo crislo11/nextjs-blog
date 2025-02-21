@@ -44,7 +44,13 @@ This project is a blog built with **Next.js 14** that includes a real-time comme
    npm run dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the blog.
+5. Start the websocket server in the port 3001:
+
+   ```bash
+   node server/websocket.js
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser to view the blog.
 
 ### Running Tests
 
