@@ -1,29 +1,7 @@
-export interface Post {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  slug: string;
-  category: string;
-  date: string;
-  author: {
-    name: string;
-    avatar: string;
-  };
-}
+import type { Post, Comment, PostDetail } from "./types";
 
-export interface Comment {
-  id: number;
-  postId: string;
-  name: string;
-  email: string;
-  body: string;
-}
+const API_URL = "https://dummyjson.com";
 
-// JSONPlaceholder endpoint
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-// Mock author data (since JSONPlaceholder doesn't provide author information)
 const MOCK_AUTHOR = {
   name: "Jane Doe",
   avatar: "https://i.pravatar.cc/100?img=1",
@@ -39,7 +17,7 @@ export async function fetchBlogPosts(): Promise<Post[]> {
 
     const data = await response.json();
 
-    const posts: Post[] = data.map((post: any) => ({
+    const posts: Post[] = data?.posts?.map((post: PostDetail) => ({
       id: post.id.toString(),
       title: post.title,
       excerpt: post.body.substring(0, 100),
@@ -57,14 +35,12 @@ export async function fetchBlogPosts(): Promise<Post[]> {
   }
 }
 
-export async function fetchBlogPostBySlug(slug: string): Promise<Post | null> {
+export async function fetchBlogPostBySlug(id: string): Promise<Post | null> {
   try {
-    const postId = slug.split("-")[1];
-
-    const response = await fetch(`${API_URL}/posts/${postId}`);
+    const response = await fetch(`${API_URL}/posts/${id}`);
 
     if (!response.ok) {
-      throw new Error("Failed to fetch blog post");
+      throw new Error("Failed to fetch blog post by slug");
     }
 
     const post = await response.json();
@@ -87,16 +63,15 @@ export async function fetchBlogPostBySlug(slug: string): Promise<Post | null> {
 
 export async function fetchComments(postId: string): Promise<Comment[]> {
   try {
-    const response = await fetch(
-      `${API_URL}/comments?postId=${postId}`
-    );
+    const response = await fetch(`${API_URL}/comments/post/${postId}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch comments");
     }
 
-    const comments: Comment[] = await response.json();
-    return comments;
+    const data = await response.json();
+
+    return data.comments;
   } catch (error) {
     console.error("Error fetching comments:", error);
     throw error;

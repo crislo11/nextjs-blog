@@ -1,14 +1,22 @@
-import { fetchBlogPostBySlug, fetchComments } from "@/lib/api";
+import { fetchBlogPostBySlug, fetchBlogPosts, fetchComments } from "@/lib/api";
 import Layout from "@/app/layout";
 import BlogPost from "@/components/blog/BlogPost";
 import RealTimeComments from "@/components/comments/RealTimeComments";
 
+export async function generateStaticParams() {
+  const posts = await fetchBlogPosts();
+
+  return posts.map((post) => ({
+    id: post.id.toString(),
+  }));
+}
+
 export default async function BlogPostPage({
   params,
 }: {
-  params: { slug: string };
+  params: { id: string };
 }) {
-  const post = await fetchBlogPostBySlug(params.slug);
+  const post = await fetchBlogPostBySlug(params?.id);
 
   if (!post) {
     return <div>Post not found</div>;
