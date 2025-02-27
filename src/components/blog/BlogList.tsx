@@ -23,7 +23,7 @@ export default function BlogList({ post }: { post: Post }) {
     <Card className="flex flex-col justify-between">
       <CardHeader>
         <CardTitle>
-          <Link href={`/${post.slug}`}>{post.title}</Link>
+          <Link href={`/blog/${post.id}`}>{post.title}</Link>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -35,7 +35,7 @@ export default function BlogList({ post }: { post: Post }) {
       </CardContent>
       <CardFooter>
         <Button asChild>
-          <Link href={`/${post.slug}`}>Read More</Link>
+          <Link href={`/blog/${post.id}`}>Read More</Link>
         </Button>
       </CardFooter>
     </Card>

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Comment } from "./api";
+import type { Comment } from "./types";
 
 interface BlogState {
   comments: Comment[];

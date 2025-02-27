@@ -4,14 +4,7 @@ import { useEffect, useState } from "react";
 import useBlogStore from "@/lib/store";
 import Comments from "@/components/comments/Comments";
 import CommentForm from "@/components/comments/CommentForm";
-
-interface Comment {
-  id: number;
-  postId: string;
-  name: string;
-  email: string;
-  body: string;
-}
+import type { Comment } from "@/lib/types";
 
 export default function RealTimeComments({
   postId,
