@@ -1,37 +1,27 @@
 describe("Blog Post Page", () => {
   it("displays the post and comments", () => {
-    // Visit the blog post page
-    cy.visit("http://localhost:3000/post-1");
+    cy.visit("http://localhost:3000/blog/1");
 
-    // Verify the post title and content
+    cy.contains("His mother had always taught him").should("exist");
     cy.contains(
-      "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+      "His mother had always taught him not to ever think of himself as better than others. He'd tried to live by this motto. He never looked down on those who were less fortunate or who had less money than him. But the stupidity of the group of people he was talking to made him change his mind."
     ).should("exist");
-    cy.contains("quia et suscipit suscipit ").should("exist");
 
-    // Verify the comments section
     cy.contains("Comments").should("exist");
-    cy.contains("id labore ex et quam laborum").should("exist");
-    cy.contains(
-      "laudantium enim quasi est quidem magnam voluptate ipsam eos tempora quo necessitatibus dolor quam autem quasi reiciendis et nam sapiente accusantium"
-    ).should("exist");
+    cy.contains("leahw").should("exist");
+    cy.contains("These are fabulous ideas!").should("exist");
   });
 
   it("allows adding a new comment", () => {
-    // Visit the blog post page
-    cy.visit("http://localhost:3000/post-1");
+    cy.visit("http://localhost:3000/blog/1");
 
-    // Fill out the comment form
     cy.get('input[placeholder="Your name"]').type("Jane Doe");
-    cy.get('input[placeholder="Your email"]').type("jane@example.com");
     cy.get('textarea[placeholder="Your comment"]').type(
       "This is a new comment."
     );
 
-    // Submit the form
     cy.contains("Add Comment").click();
 
-    // Verify the new comment is displayed
     cy.contains("Jane Doe").should("exist");
     cy.contains("This is a new comment.").should("exist");
   });
