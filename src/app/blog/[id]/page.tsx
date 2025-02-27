@@ -1,30 +1,57 @@
-import { fetchBlogPostBySlug, fetchBlogPosts, fetchComments } from "@/lib/api";
+"use client";
+
+import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { fetchBlogPostBySlug, fetchComments } from "@/lib/api";
 import Layout from "@/app/layout";
 import BlogPost from "@/components/blog/BlogPost";
 import RealTimeComments from "@/components/comments/RealTimeComments";
+import { Post, Comment } from "@/lib/types";
 
-export async function generateStaticParams() {
-  const posts = await fetchBlogPosts();
+export default function BlogPostPage() {
+  const params = useParams();
+  const id = params?.id as string;
 
-  return posts.map((post) => ({
-    id: post.id.toString(),
-  }));
-}
+  const [post, setPost] = useState<Post | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const post = await fetchBlogPostBySlug(params?.id);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedPost = await fetchBlogPostBySlug(id);
+        if (fetchedPost) {
+          setPost(fetchedPost);
+          const fetchedComments = await fetchComments(fetchedPost.id);
+          setComments(fetchedComments);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!post) {
-    return <div>Post not found</div>;
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="container mx-auto p-4">Loading...</div>
+      </Layout>
+    );
   }
 
-  const postId = post?.id;
-
-  const comments = await fetchComments(postId);
+  if (!post) {
+    return (
+      <Layout>
+        <div className="container mx-auto p-4">Post not found</div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

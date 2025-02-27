@@ -31,6 +31,7 @@ export interface PostDetail {
   name: string;
   email: string;
   body: string;
+  tags: string[];
 }
 
 export interface CommentMessage {
