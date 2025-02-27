@@ -3,13 +3,14 @@ const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port: 3001 });
 
 wss.on("connection", (ws) => {
-  console.log("Client connected");
+  console.log("New Client connected");
 
   ws.on("message", (message) => {
-    const newComment = JSON.parse(message);
+    console.log("Message received:", message.toString());
+
     wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(newComment));
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(message);
       }
     });
   });
@@ -19,4 +20,4 @@ wss.on("connection", (ws) => {
   });
 });
 
-console.log("WebSocket server is running on ws://localhost:3001");
+console.log("WebSocket server running on ws://localhost:3001");
