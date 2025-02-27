@@ -5,7 +5,7 @@ import { Comment } from "@/lib/types";
 
 export default function Comments({ comments }: { comments: Comment[] }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-16">
       <h2 className="text-2xl font-bold">Comments</h2>
       {comments?.map((comment) => (
         <Card key={comment.id}>
