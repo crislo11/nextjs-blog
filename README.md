@@ -6,7 +6,7 @@ This project is a blog built with **Next.js 14** that includes a real-time comme
 
 - **Server-Side Rendering (SSR)**: Blog pages and comments are rendered on the server for better performance and SEO.
 - **Real-Time Comments**: Users can add comments and see them update in real time.
-- **State Management**: Zustand is used to manage comment state on the client side.
+- **State Management**: Zustand manages the comment state on the client side.
 - **Modular Design**: Components are organized by responsibility and follow best development practices.
 - **Testing**: Includes unit, integration, and end-to-end (E2E) tests to ensure code quality.
 
@@ -35,7 +35,7 @@ This project is a blog built with **Next.js 14** that includes a real-time comme
 3. Create a `.env.local` file in the root directory and add the following environment variables:
 
    ```bash
-   NEXT_PUBLIC_API_URL=https://jsonplaceholder.typicode.com
+   NEXT_PUBLIC_API_URL=https://dummyjson.com/
    ```
 
 4. Start the development server:
