@@ -20,6 +20,15 @@ export interface Comment {
   body: string;
 }
 
+interface PostDetail {
+  postId: number;
+  id: number;
+  title: string;
+  name: string;
+  email: string;
+  body: string;
+}
+
 // JSONPlaceholder endpoint
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -39,7 +48,7 @@ export async function fetchBlogPosts(): Promise<Post[]> {
 
     const data = await response.json();
 
-    const posts: Post[] = data.map((post: any) => ({
+    const posts: Post[] = data.map((post: PostDetail) => ({
       id: post.id.toString(),
       title: post.title,
       excerpt: post.body.substring(0, 100),
@@ -61,7 +70,7 @@ export async function fetchBlogPostBySlug(slug: string): Promise<Post | null> {
   try {
     const postId = slug.split("-")[1];
 
-    const response = await fetch(`${API_URL}/posts/${postId}`);
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts${postId}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch blog post");
