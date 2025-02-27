@@ -23,7 +23,7 @@ export async function fetchBlogPosts(): Promise<Post[]> {
       excerpt: post.body.substring(0, 100),
       content: `${post.body}`,
       slug: `post-${post.id}`,
-      category: "Uncategorized",
+      category: post.tags[0] || "Uncategorized",
       date: new Date().toISOString().split("T")[0],
       author: MOCK_AUTHOR,
     }));
@@ -35,7 +35,7 @@ export async function fetchBlogPosts(): Promise<Post[]> {
   }
 }
 
-export async function fetchBlogPostBySlug(id: string): Promise<Post | null> {
+export async function fetchBlogPostBySlug(id: string): Promise<Post> {
   try {
     const response = await fetch(`${API_URL}/posts/${id}`);
 
@@ -51,7 +51,7 @@ export async function fetchBlogPostBySlug(id: string): Promise<Post | null> {
       excerpt: post.body.substring(0, 100),
       content: `${post.body}`,
       slug: `post-${post.id}`,
-      category: "Uncategorized",
+      category: post.tags[0] || "Uncategorized",
       date: new Date().toISOString().split("T")[0],
       author: MOCK_AUTHOR,
     };
