@@ -1,45 +1,43 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
 import { ChevronLeft, Loader2 } from "lucide-react";
-import { fetchBlogPostBySlug, fetchComments } from "@/lib/api";
+import { useBlogPostDetail } from "@/hooks/useBlogPostDetail";
+import { useComments } from "@/hooks/useBlogComments";
 import Layout from "@/app/layout";
 import BlogPost from "@/components/blog/BlogPost";
 import RealTimeComments from "@/components/comments/RealTimeComments";
-import { Post, Comment } from "@/lib/types";
 import Link from "next/link";
 
 export default function BlogPostPage() {
   const params = useParams();
   const id = params?.id as string;
 
-  const [post, setPost] = useState<Post | null>(null);
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: post,
+    isLoading: isPostLoading,
+    error: postError,
+  } = useBlogPostDetail(id);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedPost = await fetchBlogPostBySlug(id);
-        if (fetchedPost) {
-          setPost(fetchedPost);
-          const fetchedComments = await fetchComments(fetchedPost.id);
-          setComments(fetchedComments);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: comments,
+    isLoading: isCommentsLoading,
+    error: commentsError,
+  } = useComments(post?.id || "");
 
-    if (id) {
-      fetchData();
-    }
-  }, [id]);
+  const isLoading = isPostLoading || isCommentsLoading;
 
-  if (loading)
+  if (postError || commentsError) {
+    return (
+      <Layout>
+        <div className="container mx-auto p-4">
+          Error: {postError?.message || commentsError?.message}
+        </div>
+      </Layout>
+    );
+  }
+
+  if (isLoading) {
     return (
       <div
         className="min-h-screen bg-background flex items-center justify-center"
@@ -52,6 +50,7 @@ export default function BlogPostPage() {
         />
       </div>
     );
+  }
 
   if (!post) {
     return (
@@ -75,7 +74,7 @@ export default function BlogPostPage() {
           </Link>
         </div>
         <BlogPost post={post} />
-        <RealTimeComments postId={post.id} initialComments={comments} />
+        <RealTimeComments postId={post.id} initialComments={comments || []} />
       </div>
     </Layout>
   );
