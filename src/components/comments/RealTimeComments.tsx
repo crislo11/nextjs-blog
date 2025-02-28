@@ -19,11 +19,23 @@ export default function RealTimeComments({
   useEffect(() => {
     const socket = new WebSocket("ws://localhost:3001");
 
-    socket.onmessage = (event) => {
-      const newComment = JSON.parse(event.data);
-      if (newComment.postId === postId) {
-        setComments((prevComments) => [...prevComments, newComment]);
-        addComment(newComment);
+    socket.onmessage = async (event) => {
+      try {
+        let data;
+        if (event.data instanceof Blob) {
+          data = await event.data.text();
+        } else {
+          data = event.data;
+        }
+
+        const newComment = JSON.parse(data);
+
+        if (newComment.postId === postId) {
+          setComments((prevComments) => [...prevComments, newComment]);
+          addComment(newComment);
+        }
+      } catch (error) {
+        console.error("Error parsing WebSocket message:", error);
       }
     };
 
