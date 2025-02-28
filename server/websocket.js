@@ -8,9 +8,12 @@ wss.on("connection", (ws) => {
   ws.on("message", (message) => {
     console.log("Message received:", message.toString());
 
+    const messageString = message.toString();
+    const messageData = JSON.parse(messageString);
+
     wss.clients.forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
+        client.send(JSON.stringify(messageData));
       }
     });
   });
